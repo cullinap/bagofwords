@@ -1,0 +1,29 @@
+import pandas as pd
+import numpy as np
+from bs4 import BeautifulSoup
+import re
+from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import CountVectorizer
+
+raw_review = pd.read_csv('/Users/patrickcullinane/Desktop dumps/2017:November:16/aclImdb/labeledTrainData.tsv', sep='\t', header=None)
+raw_review.columns = ['ID', 'Sentiment', 'review']
+
+def review_to_words(raw_review):
+    review_text = BeautifulSoup(raw_review, 'lxml').get_text()
+    letters_only = re.sub("[^a-zA-z']", " ", review_text)
+    lower_case = letters_only.lower()
+    words = lower_case.split()
+    stops = set(stopwords.words('english'))
+    meaningful_words = [w for w in words if not w in stops]
+    return(' '.join(meaningful_words))
+
+num_reviews = raw_review['review'].size
+clean_train_reviews = []
+
+for i in range(0, num_reviews):
+    if((i+1)%1000 == 0):
+        print('review %d of % d\n' %(i+1, num_reviews))
+    clean_train_reviews.append(review_to_words(raw_review['review'][i]))
+
+df = pd.DataFrame(clean_train_reviews)
+df.to_csv('/Users/patrickcullinane/Desktop/reviews.csv', index=False)
