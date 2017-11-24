@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.ensemble import RandomForestClassifier
 
 clean_train_reviews = pd.read_csv('reviews.csv')
-train = pd.read_csv('/Users/patrickcullinane/Desktop dumps/2017:November:16/aclImdb/labeledTrainData.tsv', sep='\t', header=None)
+train = pd.read_csv('labeledTrainData.tsv', sep='\t', header=None)
 train.columns = ['ID', 'Sentiment', 'review']
 test = pd.read_csv('testData.tsv', header=0, delimiter="\t", \
                    quoting=3)
