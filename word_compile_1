@@ -5,7 +5,7 @@ import re
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 
-raw_review = pd.read_csv('/Users/patrickcullinane/Desktop dumps/2017:November:16/aclImdb/labeledTrainData.tsv', sep='\t', header=None)
+raw_review = pd.read_csv('labeledTrainData.tsv', sep='\t', header=None)
 raw_review.columns = ['ID', 'Sentiment', 'review']
 
 def review_to_words(raw_review):
@@ -26,4 +26,4 @@ for i in range(0, num_reviews):
     clean_train_reviews.append(review_to_words(raw_review['review'][i]))
 
 df = pd.DataFrame(clean_train_reviews)
-df.to_csv('/Users/patrickcullinane/Desktop/reviews.csv', index=False)
+df.to_csv('reviews.csv', index=False)
